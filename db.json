@@ -1,0 +1,37 @@
+{
+    "Users": [
+      {
+        "id": 1,
+        "username": "rey",
+        "state": "true",
+        "deck": [1,2,3,4,5]
+      },
+      {
+        "id": 2,
+        "username": "valentin",
+        "state": "true",
+        "deck": [10,20,30,40,50]
+      },
+      {
+        "id": 3,
+        "username": "arias",
+        "state": "true",
+        "deck": [100,200,300,400,500]
+      },
+      {
+        "id": 4,
+        "username": "perez",
+        "state": "true",
+        "deck": [73,21,37,12,111]
+      },
+      {
+        "id": 5,
+        "username": "RVAP",
+        "state": "true",
+        "deck": [200,201,403,404,500]
+      }
+    ],
+    "profile": {
+      "name": "typicode"
+    }
+  }
