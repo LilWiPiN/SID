@@ -43,9 +43,7 @@ public class HttpTest : MonoBehaviour
                 StartCoroutine("GetUser", idButton);
             else
                 Debug.Log("error");
-        }
-
-            
+        }  
     }
 
     public void PlusId()
@@ -126,7 +124,6 @@ public class HttpTest : MonoBehaviour
                 StartCoroutine(GetImage(character.image, tagImage));
                 StartCoroutine(GetName(character.name, tagName));
             }
-
             else
             {
                 string msj = "status: " + request.responseCode;
@@ -142,13 +139,9 @@ public class HttpTest : MonoBehaviour
         yield return request.SendWebRequest();
 
         if (request.result == UnityWebRequest.Result.ConnectionError)
-        {
             Debug.Log(request.error);
-        }
         else
-        {
             GameObject.Find(nameTag).GetComponent<TextMeshProUGUI>().text = name;
-        }
     }
 
     IEnumerator GetImage(string image, string imageTag)
@@ -157,9 +150,7 @@ public class HttpTest : MonoBehaviour
         yield return request.SendWebRequest();
 
         if (request.result == UnityWebRequest.Result.ConnectionError)
-        {
             Debug.Log(request.error);
-        }
         else
         {
             var texture = ((DownloadHandlerTexture)request.downloadHandler).texture;
