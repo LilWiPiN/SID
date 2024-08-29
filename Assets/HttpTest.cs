@@ -79,7 +79,7 @@ public class HttpTest : MonoBehaviour
         {
             if (request.responseCode == 200)
             {
-                User user = JsonUtility.FromJson<User>(request.downloadHandler.text);
+                UserRM user = JsonUtility.FromJson<UserRM>(request.downloadHandler.text);
                 GameObject.Find("Username").GetComponent<TextMeshProUGUI>().text = "Username: " + user.username;
 
                 Debug.Log(user.username);
@@ -167,7 +167,7 @@ class Character
     public string image;
 }
 
-class User
+class UserRM
 {
     public int id;
     public string username;

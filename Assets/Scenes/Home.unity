@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 124563567}
   - component: {fileID: 124563566}
   m_Layer: 5
-  m_Name: ButtonSignIn
+  m_Name: ButtonSignUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -208,7 +208,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 548488913}
         m_TargetAssemblyTypeName: AuthHandler, Assembly-CSharp
-        m_MethodName: SignIn
+        m_MethodName: SignUp
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -554,6 +554,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   URL: https://sid-restapi.onrender.com/
+  _token: 
+  _username: 
 --- !u!4 &548488914
 Transform:
   m_ObjectHideFlags: 0
