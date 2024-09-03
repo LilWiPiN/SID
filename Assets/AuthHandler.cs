@@ -53,7 +53,9 @@ public class AuthHandler : MonoBehaviour
     public GameObject leaderboardScore;
     public GameObject leaderboardLevel;
     public GameObject leaderboardExp;
+    public GameObject leaderboardImg;
     string tagUsername, tagScore, tagLevel, tagExp;
+    public Texture tagImg;
     int index;
 
     void Start()
@@ -106,6 +108,7 @@ public class AuthHandler : MonoBehaviour
         leaderboardScore = GameObject.Find($"UserScore{index}");
         leaderboardLevel = GameObject.Find($"UserLevel{index}");
         leaderboardExp = GameObject.Find($"UserExp{index}");
+        leaderboardImg = GameObject.Find($"UserImg{index}");
 
         menuScreen.SetActive(false);
         ProfileScreen.SetActive(false);
@@ -205,6 +208,11 @@ public class AuthHandler : MonoBehaviour
         string postData = JsonUtility.ToJson(userData);
 
         StartCoroutine(PatchUsers(postData));
+    }
+
+    public void ShowLeaderboard()
+    {
+        StartCoroutine(GetUsers());
     }
 
     IEnumerator SignUpPost(string postData)
@@ -373,36 +381,53 @@ public class AuthHandler : MonoBehaviour
             if (request.responseCode == 200)
             {
                 AuthData data = JsonUtility.FromJson<AuthData>(request.downloadHandler.text);
-                //User userK = data.usuario;
-                //Debug.Log(userK.username + " esta en nivel " + userK.data.level + " y tiene puntaje " + userK.data.score);
-
+                
                 Debug.Log(request.downloadHandler.text);
-
-                TextMeshProUGUI usernameText = leaderboardUsername.GetComponent<TextMeshProUGUI>();
-                TextMeshProUGUI scoreText = leaderboardScore.GetComponent<TextMeshProUGUI>();
-                TextMeshProUGUI levelText = leaderboardLevel.GetComponent<TextMeshProUGUI>();
-                TextMeshProUGUI expText = leaderboardExp.GetComponent<TextMeshProUGUI>();
-
-                int rnd = Random.Range(0, 10);
 
                 LeaderboardScreen.SetActive(true);
                 ProfileScreen.SetActive(false);
 
                 UserList users = JsonUtility.FromJson<UserList>(request.downloadHandler.text);
 
-                foreach (var user in users.usuarios)
-                {
-                    imgProfile.texture = rndTexture[rnd];
-
-                    tagUsername = usernameText.text = $"<color={user.data.color.ToLower()}>{user.username}</color>";
-                    tagScore = scoreText.text = user.data.score.ToString();
-                    tagLevel = levelText.text = user.data.level.ToString();
-                    tagExp = expText.text = user.data.exp.ToString();
-
-                    index++;
-                }
+                index = 0;
 
                 List<User> leaderboard = users.usuarios.OrderByDescending(u => u.data.score).ToList();
+
+                foreach (var user in leaderboard)
+                {
+                    leaderboardUsername = GameObject.Find($"UserText{index}");
+                    leaderboardScore = GameObject.Find($"UserScore{index}");
+                    leaderboardLevel = GameObject.Find($"UserLevel{index}");
+                    leaderboardExp = GameObject.Find($"UserExp{index}");
+                    leaderboardImg = GameObject.Find($"UserImg{index}");
+
+                    if (leaderboardUsername != null && leaderboardScore != null && leaderboardLevel != null && leaderboardExp != null)
+                    {
+                        TextMeshProUGUI usernameText = leaderboardUsername.GetComponent<TextMeshProUGUI>();
+                        TextMeshProUGUI scoreText = leaderboardScore.GetComponent<TextMeshProUGUI>();
+                        TextMeshProUGUI levelText = leaderboardLevel.GetComponent<TextMeshProUGUI>();
+                        TextMeshProUGUI expText = leaderboardExp.GetComponent<TextMeshProUGUI>();
+                        RawImage imgText = leaderboardImg.GetComponent<RawImage>();
+
+                        string colorCode = user.data.color?.ToLower();
+                        if (string.IsNullOrEmpty(colorCode))
+                            colorCode = "white";
+
+                        int rnd = Random.Range(0, 10);
+
+                        tagUsername = usernameText.text = $"<color={colorCode}>{user.username}</color>";
+                        tagScore = scoreText.text = $"<color={colorCode}>{user.data.score}</color>"; 
+                        tagLevel = levelText.text = $"<color={colorCode}>{user.data.level}</color>"; 
+                        tagExp = expText.text = $"<color={colorCode}>{user.data.exp}</color>"; 
+                        tagImg = imgText.texture = imgProfile.texture = rndTexture[rnd];
+
+                        index++;
+                    }
+                    else
+                    {
+                        Debug.LogError($"No se encontró uno de los objetos: UserText{index}, UserScore{index}, UserLevel{index}, UserExp{index}");
+                    }
+                }
             }
             else
             {
