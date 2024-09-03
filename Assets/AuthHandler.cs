@@ -5,8 +5,6 @@ using System.Text;
 using TMPro;
 using Unity.VisualScripting;
 using Unity.VisualScripting.Antlr3.Runtime;
-using UnityEditor.PackageManager.Requests;
-using UnityEditor.U2D.Aseprite;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SocialPlatforms.Impl;
